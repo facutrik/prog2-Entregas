@@ -6,32 +6,9 @@ from menu import mostrar_menu
 def main():
     biblioteca = Biblioteca()
 
-    # Miembros de prueba
-    miembro1 = Miembro("Facundo", "12345678")
-
-    biblioteca.agregar_miembro(miembro1)
-
-    # Libros de prueba
-    libro1 = Libro(
-        "Harry",
-        "Jk",
-        "111"
-    )
-
-    libro2 = Libro(
-        "anibal",
-        "diaz",
-        "222"
-    )
-
-    biblioteca.agregar_libros(libro1)
-
-    biblioteca.agregar_libros(libro2)
-    
     while True:
         mostrar_menu()
         opcion = input("\nIngrese la opcion deseada: ")
-
 
         if opcion == "1": #Agregar miembro
             while True:
@@ -60,7 +37,6 @@ def main():
                         biblioteca.agregar_miembro(miembro)
                         print('Miembro agregado correctamente.')
                         break
-
 
         elif opcion == "2": #Agregar libro
             while True:
@@ -92,7 +68,6 @@ def main():
                         print('Libro agregado correctamente.')
                         break
 
-
         elif opcion == "3": #Prestar libro
             miembro_encontrado = None
             libro_encontrado = None
@@ -113,29 +88,35 @@ def main():
                 if libro_encontrado:
                     break
                 else:
-                    print("Miembro o libro no encontrado")
+                    print("Libro no encontrado")
             miembro_encontrado.tomar_libro(libro_encontrado)
 
-
         elif opcion == "4": #Devolver libro
-            dni = input("Ingrese DNI del miembro: ")
-            titulo = input("Titulo del nombre: ")
             miembro_encontrado = None
             libro_encontrado = None
-            for m in biblioteca.miembros:
-                if m.dni == dni:
-                    miembro_encontrado = m
-            for l in biblioteca.libros:
-                if l.titulo == titulo:
-                    libro_encontrado = l
-            if miembro_encontrado and libro_encontrado:
-                miembro_encontrado.devolver_libro(libro_encontrado)
-            else:
-                print("Miembro o libro no encontrado")
+            while True:
+                dni = input("Ingrese DNI del miembro: ")
+                for m in biblioteca.miembros:
+                    if m.dni == dni:
+                        miembro_encontrado = m
+                if miembro_encontrado:
+                    break
+                else:
+                    print("Ingrese DNI valido, miembro no encontrado")
+                while True:
+                    titulo = input("Titulo del nombre: ")
+                    for l in biblioteca.libros:
+                        if l.titulo == titulo:
+                            libro_encontrado = l
+                    if libro_encontrado:
+                        break
+                    else:
+                        print("Libro no encontrado")
+                    if miembro_encontrado and libro_encontrado:
+                        miembro_encontrado.devolver_libro(libro_encontrado)
 
         elif opcion == "5": #Consultar estado libro
             biblioteca.estado_libros()
-
 
         elif opcion == "6": #Consultar estado miembro
             biblioteca.estado_miembros()
