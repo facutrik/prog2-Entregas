@@ -5,6 +5,28 @@ from menu import mostrar_menu
 
 def main():
     biblioteca = Biblioteca()
+
+    # Miembros de prueba
+    miembro1 = Miembro("Facundo", "12345678")
+
+    biblioteca.agregar_miembro(miembro1)
+
+    # Libros de prueba
+    libro1 = Libro(
+        "Harry",
+        "Jk",
+        "111"
+    )
+
+    libro2 = Libro(
+        "anibal",
+        "diaz",
+        "222"
+    )
+
+    biblioteca.agregar_libros(libro1)
+
+    biblioteca.agregar_libros(libro2)
     
     while True:
         mostrar_menu()
@@ -24,6 +46,8 @@ def main():
                     print("El DNI no puede estar vacio")
                 elif len(dni) < 7 or len(dni) > 8:
                     print("El DNI debe ser numerico entre 7 y 8 digitos.")
+                elif not dni.isdigit():
+                    print('El DNI solo debe contener numeros')
                 else: 
                     dni_existe = False
                     for m in biblioteca.miembros:
@@ -80,34 +104,30 @@ def main():
                 if miembro_encontrado:
                     break
                 else:
-                    print("Miembro no encontrado")
-                while True:
-                    titulo = input("Titulo del libro: ")
-                    for l in biblioteca.libros:
-                        if l.titulo == titulo:
+                    print("Ingrese DNI valido, miembro no encontrado")
+            while True:
+                titulo = input("Titulo del libro: ")
+                for l in biblioteca.libros:
+                    if l.titulo.lower() == titulo.lower():
                             libro_encontrado = l
-                    if libro_encontrado:
-                        break
-                    else:
-                        print("Miembro o libro no encontrado")
-                    miembro_encontrado.tomar_libro(libro_encontrado)
+                if libro_encontrado:
+                    break
+                else:
+                    print("Miembro o libro no encontrado")
+            miembro_encontrado.tomar_libro(libro_encontrado)
 
 
         elif opcion == "4": #Devolver libro
             dni = input("Ingrese DNI del miembro: ")
             titulo = input("Titulo del nombre: ")
-
             miembro_encontrado = None
             libro_encontrado = None
-
             for m in biblioteca.miembros:
                 if m.dni == dni:
                     miembro_encontrado = m
-
             for l in biblioteca.libros:
                 if l.titulo == titulo:
                     libro_encontrado = l
-
             if miembro_encontrado and libro_encontrado:
                 miembro_encontrado.devolver_libro(libro_encontrado)
             else:
